@@ -39,7 +39,7 @@ updated: 2026-06-24
 
 | Artifact | Mô tả | Status |
 | :-- | :-- | :-- |
-| [SDD-DocsViewer](./Architecture/SDD-DocsViewer.md) | System Design Document — kiến trúc tổng thể, sơ đồ Mermaid 4 lớp, component design, search strategy, resource limits, performance, extensibility, traceability | draft |
+| [SDD-DocsViewer](./Architecture/SDD-DocsViewer.md) | System Design Document — kiến trúc tổng thể, sơ đồ Mermaid 4 lớp, component design, **project structure / source tree (Shared Kernel `src/domain/`)**, search strategy, resource limits, performance, extensibility, traceability | draft |
 | [ADR-001-Tech-Stack](./Architecture/ADR-001-Tech-Stack.md) | Quyết định tech stack + license posture (thay thế stub `ADR-001-Init-Architecture` đã remove) | proposed |
 | [ADR-002-Client-Side-Processing](./Architecture/ADR-002-Client-Side-Processing.md) | Client-side only, không backend/DB ở MVP | proposed |
 | [ADR-003-Layered-Adapter-Registry](./Architecture/ADR-003-Layered-Adapter-Registry.md) | Kiến trúc layered + Adapter/Registry pattern (KR3.1/KR3.2) | proposed |
