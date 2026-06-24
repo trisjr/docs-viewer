@@ -23,4 +23,4 @@ Cung cấp phương thức xác thực bảo mật và tiện lợi cho người
 
 ---
 ## Tài liệu tham khảo
-- [PRD-TNMCORE-OS](../PRD-TNMCORE-OS.md)
+- [PRD-TNMCORE-OS](./PRD-TNMCORE-OS.md)

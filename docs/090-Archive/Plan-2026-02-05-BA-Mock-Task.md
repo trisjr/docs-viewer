@@ -2,7 +2,7 @@
 id: PLAN-2026-02-05-BA-LOGIN
 type: implementation-plan
 status: draft
-linked-to: "../../020-Requirements/PRD-TNMCORE-OS.md"
+linked-to: "./PRD-TNMCORE-OS.md"
 owner: "@business-analyst"
 created: 2026-02-05
 ---
@@ -17,8 +17,8 @@ created: 2026-02-05
 - **Mục tiêu**: Hoàn thiện bộ tài liệu Specs và User Stories cho tính năng Đăng nhập bằng mã OTP qua Email.
 - **Người thực hiện**: @business-analyst (TNMCORE-OS)
 - **Căn cứ (Specs)**: 
-    - [PRD-TNMCORE-OS](../../020-Requirements/PRD-TNMCORE-OS.md)
-    - [Documents-Template](../../../knowledge-base/99-Templates/Documents-Template.md)
+    - [PRD-TNMCORE-OS](./PRD-TNMCORE-OS.md) _(đã archive)_
+    - [Documents-Template](../../knowledge-base/99-Templates/Documents-Template.md)
 
 ## 2. Thiết kế giải pháp (Solution Design)
 - **Luồng nghiệp vụ (Business Flow)**:
@@ -46,4 +46,4 @@ created: 2026-02-05
 
 ---
 ## Tài liệu tham khảo
-- [Documents-Template](../../../knowledge-base/99-Templates/Documents-Template.md)
+- [Documents-Template](../../knowledge-base/99-Templates/Documents-Template.md)
