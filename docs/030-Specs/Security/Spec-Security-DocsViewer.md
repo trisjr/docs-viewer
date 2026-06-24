@@ -1,9 +1,9 @@
 ---
 id: SPEC-SECURITY-DOCSVIEWER
 type: spec
-status: draft
+status: approved
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🔐 Spec-Security / Threat Model — DocsViewer (Client-Side MVP)

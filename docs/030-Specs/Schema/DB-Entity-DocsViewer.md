@@ -1,9 +1,9 @@
 ---
 id: DB-ENTITY-DOCSVIEWER
 type: schema
-status: draft
+status: approved
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🗃️ Domain Data Model — DocsViewer (In-Memory Runtime)

@@ -1,9 +1,9 @@
 ---
 id: ADR-003
 type: adr
-status: proposed
+status: accepted
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🏗️ ADR-003 — Layered Architecture + Format-Adapter / Registry
@@ -71,6 +71,9 @@ graph TD
 
 Quy tắc một chiều này là điều **đảm bảo** tính tách lớp không bị xói mòn theo thời gian: vì Core không "nhìn thấy" lớp trên, mọi thay đổi UI/user không thể rò rỉ ngược vào Core, và Core có thể được test/tái sử dụng độc lập (testability — phục vụ QA Phase 5).
 
+> [!NOTE]
+> **Shared Kernel `src/domain/`.** Các Domain Entity và config nền (`DocumentSession`, `FileFormat`, `MAX_FILE_SIZE`...) được tách thành một **Shared Kernel** thuần (pure types/enums, không behavior) ở `src/domain/` — vòng trong cùng mà cả 4 lớp phụ thuộc *hướng vào*. Đây **không** phải lớp xử lý thứ 5: mô hình 4 lớp ở trên vẫn nguyên vẹn. Lý do bắt buộc: port `StorageProvider` ở lớp Data tham chiếu `DocumentSession`, nên nếu để entity trong Core sẽ tạo back-edge Data → Core. Chi tiết source tree tại [SDD §4 — Project Structure](./SDD-DocsViewer.md#4-project-structure-source-tree).
+
 ### 2.2. Pattern DocumentAdapter + AdapterRegistry
 
 Trong Core, mỗi định dạng được đóng gói thành một **DocumentAdapter** triển khai cùng một interface (`canHandle` / `render` / `extract`). Một **AdapterRegistry** giữ danh sách adapter đã đăng ký và `resolve()` adapter đúng theo `FileFormat`. `DocumentService` (Application) chỉ làm việc với interface `DocumentAdapter` trừu tượng — **không** biết tới `PdfAdapter`, `DocxAdapter` hay `XlsxAdapter` cụ thể.
@@ -123,7 +126,7 @@ interface AdapterRegistry {
 
 ## 3. Status
 
-**Proposed.** Chờ Security Auditor review (gate bắt buộc Phase 2) và phê duyệt cùng bộ ADR-001..ADR-004 + SDD trước khi vào Phase 3 (implementation).
+**Accepted.** Security Auditor đã review (gate bắt buộc Phase 2 — [Spec-Security §7](../Security/Spec-Security-DocsViewer.md#7-security-auditor-review)) và được trisjr (Accountable) phê duyệt cùng bộ ADR-001..ADR-004 + SDD ngày 2026-06-25; sẵn sàng vào Phase 3 (implementation).
 
 ---
 

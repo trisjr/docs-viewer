@@ -1,9 +1,9 @@
 ---
 id: SPEC-MODULE-CONTRACTS
 type: spec
-status: draft
+status: approved
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 📐 Spec — Module Contracts (Internal TypeScript API)

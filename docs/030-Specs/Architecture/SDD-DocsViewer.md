@@ -1,10 +1,10 @@
 ---
 id: SDD-DOCSVIEWER
 type: sdd
-status: draft
+status: approved
 parent: ../../020-Requirements/PRD-DocsViewer.md
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🏗️ SDD — DocsViewer (System Design Document)

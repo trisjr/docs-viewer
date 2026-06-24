@@ -1,9 +1,9 @@
 ---
 id: ADR-002
 type: adr
-status: proposed
+status: accepted
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # ADR-002 — Client-Side Processing (Xử lý 100% tại Browser)
@@ -82,7 +82,7 @@ flowchart TB
 
 ## 3. Status (Trạng thái)
 
-**Proposed** — đề xuất, chờ phê duyệt của trisjr (Accountable) và sign-off của Security Auditor (mandatory gate Phase-2 trước Phase-3). Liên đới chặt chẽ với [ADR-001 (Tech Stack)](./ADR-001-Tech-Stack.md), [ADR-003 (Layered + Adapter-Registry)](./ADR-003-Layered-Adapter-Registry.md) và [ADR-004 (Data-Layer Separation)](./ADR-004-Data-Layer-Separation.md).
+**Accepted** — phê duyệt bởi trisjr (Accountable) ngày 2026-06-25; Security Auditor đã sign-off (mandatory gate Phase-2 — [Spec-Security §7](../Security/Spec-Security-DocsViewer.md#7-security-auditor-review)). Liên đới chặt chẽ với [ADR-001 (Tech Stack)](./ADR-001-Tech-Stack.md), [ADR-003 (Layered + Adapter-Registry)](./ADR-003-Layered-Adapter-Registry.md) và [ADR-004 (Data-Layer Separation)](./ADR-004-Data-Layer-Separation.md).
 
 ---
 

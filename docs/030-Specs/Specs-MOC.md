@@ -3,7 +3,7 @@ id: SPECS-MOC
 type: moc
 status: approved
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🗺️ Specs MOC — Map of Content (030-Specs)
@@ -39,11 +39,11 @@ updated: 2026-06-24
 
 | Artifact | Mô tả | Status |
 | :-- | :-- | :-- |
-| [SDD-DocsViewer](./Architecture/SDD-DocsViewer.md) | System Design Document — kiến trúc tổng thể, sơ đồ Mermaid 4 lớp, component design, **project structure / source tree (Shared Kernel `src/domain/`)**, search strategy, resource limits, performance, extensibility, traceability | draft |
-| [ADR-001-Tech-Stack](./Architecture/ADR-001-Tech-Stack.md) | Quyết định tech stack + license posture (thay thế stub `ADR-001-Init-Architecture` đã remove) | proposed |
-| [ADR-002-Client-Side-Processing](./Architecture/ADR-002-Client-Side-Processing.md) | Client-side only, không backend/DB ở MVP | proposed |
-| [ADR-003-Layered-Adapter-Registry](./Architecture/ADR-003-Layered-Adapter-Registry.md) | Kiến trúc layered + Adapter/Registry pattern (KR3.1/KR3.2) | proposed |
-| [ADR-004-Data-Layer-Separation](./Architecture/ADR-004-Data-Layer-Separation.md) | Tách lớp dữ liệu người dùng + extension point M3 (NFR-05/KR3.3) | proposed |
+| [SDD-DocsViewer](./Architecture/SDD-DocsViewer.md) | System Design Document — kiến trúc tổng thể, sơ đồ Mermaid 4 lớp, component design, **project structure / source tree (Shared Kernel `src/domain/`)**, search strategy, resource limits, performance, extensibility, traceability | approved |
+| [ADR-001-Tech-Stack](./Architecture/ADR-001-Tech-Stack.md) | Quyết định tech stack + license posture (thay thế stub `ADR-001-Init-Architecture` đã remove) | accepted |
+| [ADR-002-Client-Side-Processing](./Architecture/ADR-002-Client-Side-Processing.md) | Client-side only, không backend/DB ở MVP | accepted |
+| [ADR-003-Layered-Adapter-Registry](./Architecture/ADR-003-Layered-Adapter-Registry.md) | Kiến trúc layered + Adapter/Registry pattern (KR3.1/KR3.2) | accepted |
+| [ADR-004-Data-Layer-Separation](./Architecture/ADR-004-Data-Layer-Separation.md) | Tách lớp dữ liệu người dùng + extension point M3 (NFR-05/KR3.3) | accepted |
 
 ---
 
@@ -54,8 +54,8 @@ updated: 2026-06-24
 
 | Artifact | Mô tả | Status |
 | :-- | :-- | :-- |
-| [Spec-Module-Contracts](./API/Spec-Module-Contracts.md) | 8 module contract (FileFormat, UploadValidationResult, DocumentAdapter, AdapterRegistry, SearchEngine+normalize, DocumentService, SearchService, StorageProvider) + Contract→Use Case mapping (UC-02/03/04) + bao phủ FR-01..11 | draft |
-| [Spec-Integration-OSS-Libraries](./API/Spec-Integration-OSS-Libraries.md) | Tích hợp OSS lib (PDF.js / docx-preview / mammoth / SheetJS): API cụ thể, Worker usage, version-pinning, license & maintenance (R-06), fallback per format | draft |
+| [Spec-Module-Contracts](./API/Spec-Module-Contracts.md) | 8 module contract (FileFormat, UploadValidationResult, DocumentAdapter, AdapterRegistry, SearchEngine+normalize, DocumentService, SearchService, StorageProvider) + Contract→Use Case mapping (UC-02/03/04) + bao phủ FR-01..11 | approved |
+| [Spec-Integration-OSS-Libraries](./API/Spec-Integration-OSS-Libraries.md) | Tích hợp OSS lib (PDF.js / docx-preview / mammoth / SheetJS): API cụ thể, Worker usage, version-pinning, license & maintenance (R-06), fallback per format | approved |
 
 ---
 
@@ -66,7 +66,7 @@ updated: 2026-06-24
 
 | Artifact | Mô tả | Status |
 | :-- | :-- | :-- |
-| [DB-Entity-DocsViewer](./Schema/DB-Entity-DocsViewer.md) | Domain Data Model in-memory + Mermaid `erDiagram` (DocumentSession, RenderedDocument, ExtractedContent, SearchIndex, SearchMatch, SearchResultSet, FileFormat, MAX_FILE_SIZE) | draft |
+| [DB-Entity-DocsViewer](./Schema/DB-Entity-DocsViewer.md) | Domain Data Model in-memory + Mermaid `erDiagram` (DocumentSession, RenderedDocument, ExtractedContent, SearchIndex, SearchMatch, SearchResultSet, FileFormat, MAX_FILE_SIZE) | approved |
 
 ---
 
@@ -74,7 +74,7 @@ updated: 2026-06-24
 
 | Artifact | Mô tả | Status |
 | :-- | :-- | :-- |
-| [Spec-Security-DocsViewer](./Security/Spec-Security-DocsViewer.md) | Threat Model client-side (T1–T7: XSS qua docx HTML, zip-bomb, malicious PDF, prototype pollution, data exposure, export injection, supply-chain) + trust-boundary diagram + data-layer separation + **Security Auditor sign-off (APPROVED-WITH-CONDITIONS)** | draft |
+| [Spec-Security-DocsViewer](./Security/Spec-Security-DocsViewer.md) | Threat Model client-side (T1–T7: XSS qua docx HTML, zip-bomb, malicious PDF, prototype pollution, data exposure, export injection, supply-chain) + trust-boundary diagram + data-layer separation + **Security Auditor sign-off (APPROVED-WITH-CONDITIONS)** | approved |
 
 ---
 
@@ -89,7 +89,7 @@ updated: 2026-06-24
 - [x] **Security Spec đã được Security Auditor review** — [Spec-Security §7](./Security/Spec-Security-DocsViewer.md) sign-off **APPROVED-WITH-CONDITIONS** (5 điều kiện chuyển sang Phase-3 code review).
 
 > [!IMPORTANT]
-> **Gate Phase-2: 5/5 tiêu chí ĐẠT (objectively met)** — sẵn sàng cho **trisjr (Accountable, theo Charter RACI)** sign-off để chuyển sang **Phase 3 (Product Design)** / Phase 4 (Implementation).
+> **Gate Phase-2: 5/5 tiêu chí ĐẠT — ✅ ĐÃ SIGN-OFF bởi trisjr (Accountable, theo Charter RACI) ngày 2026-06-25.** Phase 2 chính thức đóng; sẵn sàng chuyển sang **Phase 3 (Product Design)** / Phase 4 (Implementation). Toàn bộ ADR → `accepted`, specs → `approved`.
 >
 > Lưu ý minh bạch: sign-off security tại [§7 Spec-Security](./Security/Spec-Security-DocsViewer.md#7-security-auditor-review) do **AI Security-Auditor role** thực hiện (cơ chế review chuẩn của TNMCORE-OS). 5 điều kiện security (CSP, DOMPurify, PDF.js hardening, SCA, export sanitize) là yêu cầu verify ở Phase-3 implementation/code-review, **không** phải blocker của gate.
 

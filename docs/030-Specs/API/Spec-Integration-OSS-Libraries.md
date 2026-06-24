@@ -1,9 +1,9 @@
 ---
 id: SPEC-INTEGRATION-OSS-LIBRARIES
 type: spec
-status: draft
+status: approved
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 📦 Spec — OSS Library Integration (DocsViewer)

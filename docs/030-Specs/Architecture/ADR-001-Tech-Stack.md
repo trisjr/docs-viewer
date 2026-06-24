@@ -1,9 +1,9 @@
 ---
 id: ADR-001
 type: adr
-status: proposed
+status: accepted
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🏗️ ADR-001 — Tech Stack (DocsViewer MVP)
@@ -144,9 +144,9 @@ graph TD
 
 ## 3. Status (Trạng thái)
 
-**Proposed.**
+**Accepted** — phê duyệt bởi trisjr (Accountable) ngày 2026-06-25; Security Auditor đã sign-off ([Spec-Security §7](../Security/Spec-Security-DocsViewer.md#7-security-auditor-review)).
 
-ADR này **supersedes** stub rỗng `ADR-001-Init-Architecture` đã được loại bỏ — thư mục `docs/030-Specs/Architecture/` đã được xác minh là trống trước khi viết, nên không còn nội dung kế thừa. Sau khi được PO/trisjr phê duyệt, status chuyển `accepted`.
+ADR này **supersedes** stub rỗng `ADR-001-Init-Architecture` đã được loại bỏ — thư mục `docs/030-Specs/Architecture/` đã được xác minh là trống trước khi viết, nên không còn nội dung kế thừa.
 
 ---
 

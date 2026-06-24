@@ -1,9 +1,9 @@
 ---
 id: ADR-004
 type: adr
-status: proposed
+status: accepted
 created: 2026-06-24
-updated: 2026-06-24
+updated: 2026-06-25
 ---
 
 # 🏗️ ADR-004 — Data-Layer Separation & Multi-User Extension Point
@@ -95,7 +95,7 @@ graph TD
 
 ## 3. Status
 
-**Proposed.** Phụ thuộc và bổ trợ cho ADR-003 (Layered + Adapter-Registry) — ADR-004 đặc tả riêng lớp Data / User và extension point multi-user. Cần Security Auditor xác nhận posture privacy-by-design (R-03/NFR-05) trong Phase-2 mandatory gate (chi tiết threat model do `Spec-Security-DocsViewer.md` sở hữu).
+**Accepted** — phê duyệt bởi trisjr (Accountable) ngày 2026-06-25. Phụ thuộc và bổ trợ cho ADR-003 (Layered + Adapter-Registry) — ADR-004 đặc tả riêng lớp Data / User và extension point multi-user. Security Auditor đã xác nhận posture privacy-by-design (R-03/NFR-05) trong Phase-2 mandatory gate ([Spec-Security §7](../Security/Spec-Security-DocsViewer.md#7-security-auditor-review); chi tiết threat model do `Spec-Security-DocsViewer.md` sở hữu).
 
 ## 4. Consequences
 
