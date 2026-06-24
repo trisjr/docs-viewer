@@ -1,0 +1,7 @@
+schema: spec-driven
+
+context: |
+  Ngôn ngữ: Tiếng Việt
+  Tất cả các artifacts phải được viết bằng Tiếng Việt.
+  - Giữ nguyên các thuật ngữ IT chuyên ngành bằng Tiếng Anh (ví dụ: API, Middleware, REST, GraphQL, v.v.).
+  - Các ví dụ mã (code examples) và đường dẫn tệp (file paths) phải giữ nguyên bằng Tiếng Anh.
