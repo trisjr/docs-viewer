@@ -47,9 +47,8 @@ out/
 __pycache__/
 *.pyc
 dev/
-data/
+/data/
 .agent/.DS_Store
-src/
 
 .opencode
 /.antigravitycli/

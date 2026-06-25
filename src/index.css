@@ -1,0 +1,19 @@
+/* AI Coding */
+/**
+ * index.css — Tailwind CSS v4 (CSS-first) entrypoint.
+ * Preflight áp cho app chrome. Content area (.docs-content) là ranh giới cô lập để
+ * render lib (PDF.js/docx-preview/SheetJS) không bị CSS reset phá fidelity (ADR-001 caveat, NFR-02).
+ * Cơ chế isolation chi tiết (shadow DOM/scope) sẽ hoàn thiện ở feature phase M1.
+ */
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.docs-content {
+  isolation: isolate;
+}
