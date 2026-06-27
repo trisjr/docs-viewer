@@ -3,7 +3,7 @@ id: ADR-001
 type: adr
 status: accepted
 created: 2026-06-24
-updated: 2026-06-25
+updated: 2026-06-27
 ---
 
 # 🏗️ ADR-001 — Tech Stack (DocsViewer MVP)
@@ -75,6 +75,9 @@ Chốt bộ công nghệ MVP như sau (đã thống nhất với PO/trisjr):
 **Vite 6 (Build/Dev).** Dev server HMR nhanh và bundle production tối ưu (code-splitting, tree-shaking) hỗ trợ mục tiêu thời gian mở trang đầu (NFR-01) và DX tốt cho solo dev (NFR-09). Vite cũng là nền tảng tự nhiên cho Vitest (cùng hệ cấu hình) → giảm chi phí bảo trì test pipeline.
 
 **Tailwind CSS v4 (Styling/UI).** UI của DocsViewer chia hai phần: *content area* (vùng render tài liệu) do chính PDF.js (canvas) / docx-preview (HTML) / SheetJS (`sheet_to_html`) **tự sinh ra**, và *chrome/shell* (UploadZone, toolbar, SearchBar, ExtractedContentPanel, ErrorBanner) — phần chrome nhỏ và đơn giản. Vì content area đã do lib render, một **component library nặng (MUI/Ant/Chakra) là thừa** và kéo bundle lớn → vi phạm YAGNI (NFR-09) và đe dọa NFR-01. Tailwind utility-first **không có runtime JS**, purge ra CSS nhỏ (hỗ trợ NFR-01), tốc độ dev cao và AI-support tốt cho mô hình solo-dev-cùng-AI (NFR-09, [R-07](../../010-Planning/Risk-Register.md#2-risk-log)), license MIT cộng đồng lớn (giảm R-06). Khi cần primitive accessible (dropdown sheet-tabs, modal lỗi) sẽ thêm **Radix UI / Headless UI** (headless, nhẹ) **on-demand** — không bắt buộc MVP (YAGNI). *Caveat tích hợp:* Tailwind **preflight** (CSS reset) phải được **cô lập khỏi content area** để không phá CSS mà docx-preview/SheetJS sinh ra — chi tiết tại [Spec-Integration-OSS-Libraries](../API/Spec-Integration-OSS-Libraries.md). *Ranh giới:* ADR này chỉ chốt **CSS tooling**; **design system visual** (màu, spacing, design tokens, component layout) thuộc Phase 3 (Product Designer).
+
+> [!NOTE]
+> **Amended by [ADR-005](./ADR-005-Adopt-Design-Mockup.md) — 2026-06-27.** Ranh giới defer visual-design này được **lift một phần** cho lát cắt PDF của Sprint-1: mockup high-fidelity `docs/040-Design/mockups/DocsViewer.dc.html` (index tại [Design-MOC](../../040-Design/Design-MOC.md)) được adopt làm **visual baseline** — design tokens (màu/spacing/typography) + layout trở thành authoritative cho implementation, thay vì chờ một deliverable design-system Phase 3 riêng. Quyết định **CSS-tooling (Tailwind)** ở trên **KHÔNG đổi**; mockup tokens được map *vào* Tailwind theme. Behavioral AC vẫn là gate Done; visual fidelity là tiêu chí additive.
 
 **PDF.js (`pdfjs-dist`) cho PDF.** Đây là engine PDF chín muồi nhất chạy thuần trong browser, do Mozilla maintain, vừa render (canvas) vừa extract text (`page.getTextContent()`), và **đã có sẵn worker model** off-main-thread. Là lựa chọn mạnh nhất để giảm R-01 (render fidelity) và đáp ứng NFR-02; đồng thời phục vụ extraction (NFR-03) trên cùng một lib → giảm số phụ thuộc.
 

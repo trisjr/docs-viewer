@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  @keyframes dv-spin{to{transform:rotate(360deg);}}
+  @keyframes dv-pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+</style>
+</helmet>
+
+<!-- ============ FRAME 1 · EMPTY STATE ============ -->
+<div style="position:absolute; left:0px; top:0px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">01</span>&nbsp;&nbsp;Empty state</div>
+  <div data-screen-label="Empty state" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <!-- top bar -->
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="font-weight:600; font-size:15px; color:#111827; letter-spacing:-0.01em;">DocsViewer</div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F9FAFB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#4F46E5; color:#FFFFFF; font-weight:500; font-size:13px; font-family:inherit; border:none; box-shadow:0 1px 2px rgba(16,24,40,0.1); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <!-- main: dropzone -->
+    <div style="height:640px; background:#F9FAFB; display:flex; align-items:center; justify-content:center; padding:48px;">
+      <div style="width:100%; max-width:560px; padding:56px 40px; background:#FFFFFF; border:2px dashed #D1D5DB; border-radius:14px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+        <div style="width:72px; height:72px; border-radius:16px; background:#EEF2FF; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+        </div>
+        <div style="font-size:18px; font-weight:600; color:#111827; margin-bottom:8px;">Drag a file here or <span style="color:#4F46E5;">click to browse</span></div>
+        <div style="font-size:13.5px; color:#6B7280; line-height:1.5;">Supports PDF, .docx, .xlsx — up to 25&nbsp;MB</div>
+        <div style="display:flex; gap:8px; margin-top:24px;">
+          <span style="font-size:11px; font-weight:500; color:#6B7280; padding:4px 10px; background:#F3F4F6; border-radius:999px;">PDF</span>
+          <span style="font-size:11px; font-weight:500; color:#6B7280; padding:4px 10px; background:#F3F4F6; border-radius:999px;">DOCX</span>
+          <span style="font-size:11px; font-weight:500; color:#6B7280; padding:4px 10px; background:#F3F4F6; border-radius:999px;">XLSX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 2 · LOADING ============ -->
+<div style="position:absolute; left:1400px; top:0px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">02</span>&nbsp;&nbsp;Loading</div>
+  <div data-screen-label="Loading state" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="font-weight:600; font-size:15px; color:#111827; letter-spacing:-0.01em;">DocsViewer</div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F3F4F6; opacity:.6;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#4F46E5; color:#FFFFFF; font-weight:500; font-size:13px; font-family:inherit; border:none; opacity:.6;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <div style="height:640px; background:#F9FAFB; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div style="width:44px; height:44px; border-radius:50%; border:3px solid #E5E7EB; border-top-color:#4F46E5; animation:dv-spin 0.8s linear infinite;"></div>
+      <div style="margin-top:20px; font-size:15px; font-weight:500; color:#374151;">Opening document…</div>
+      <div style="margin-top:6px; font-size:12.5px; color:#9CA3AF;">Q2-business-review.pdf · 4.2&nbsp;MB</div>
+      <!-- skeleton page -->
+      <div style="margin-top:36px; width:420px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:8px; padding:28px; box-shadow:0 1px 3px rgba(16,24,40,0.06);">
+        <div style="height:18px; width:62%; border-radius:5px; background:#E5E7EB; animation:dv-pulse 1.4s ease-in-out infinite;"></div>
+        <div style="height:10px; width:100%; border-radius:4px; background:#EEF0F3; margin-top:18px; animation:dv-pulse 1.4s ease-in-out infinite .1s;"></div>
+        <div style="height:10px; width:96%; border-radius:4px; background:#EEF0F3; margin-top:10px; animation:dv-pulse 1.4s ease-in-out infinite .15s;"></div>
+        <div style="height:10px; width:88%; border-radius:4px; background:#EEF0F3; margin-top:10px; animation:dv-pulse 1.4s ease-in-out infinite .2s;"></div>
+        <div style="height:10px; width:70%; border-radius:4px; background:#EEF0F3; margin-top:10px; animation:dv-pulse 1.4s ease-in-out infinite .25s;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 3 · PDF VIEWER (PRIMARY) ============ -->
+<div style="position:absolute; left:0px; top:820px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">03</span>&nbsp;&nbsp;PDF viewer · primary</div>
+  <div data-screen-label="PDF viewer" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="display:flex; flex-direction:column; line-height:1.15;">
+          <div style="font-weight:600; font-size:14px; color:#111827;">Q2-business-review.pdf</div>
+          <div style="font-size:11px; color:#9CA3AF;">24 pages · 4.2 MB</div>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F9FAFB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#FFFFFF; color:#374151; font-weight:500; font-size:13px; font-family:inherit; border:1px solid #E5E7EB; box-shadow:0 1px 2px rgba(16,24,40,0.04); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <div style="display:flex; height:640px;">
+      <!-- viewer -->
+      <div style="flex:1; min-width:0; background:#F3F4F6; position:relative; display:flex; align-items:flex-start; justify-content:center; overflow:hidden; padding:32px 0;">
+        <div style="width:460px; height:600px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:3px; box-shadow:0 4px 18px rgba(16,24,40,0.1); display:flex; align-items:center; justify-content:center; background-image:repeating-linear-gradient(45deg, #FAFAFB, #FAFAFB 11px, #F4F5F7 11px, #F4F5F7 22px);">
+          <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; color:#9CA3AF; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:8px 12px;">PDF page 3 · rendered by viewer</div>
+        </div>
+        <!-- floating toolbar -->
+        <div style="position:absolute; bottom:22px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:4px; height:42px; padding:0 6px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:11px; box-shadow:0 6px 20px rgba(16,24,40,0.14);">
+          <button style="width:32px; height:32px; border:none; background:transparent; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></button>
+          <div style="font-size:13px; color:#374151; font-variant-numeric:tabular-nums; padding:0 6px; min-width:54px; text-align:center;"><strong style="font-weight:600;">3</strong><span style="color:#9CA3AF;"> / 24</span></div>
+          <button style="width:32px; height:32px; border:none; background:transparent; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg></button>
+          <div style="width:1px; height:20px; background:#E5E7EB; margin:0 4px;"></div>
+          <button style="width:32px; height:32px; border:none; background:transparent; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+          <div style="font-size:13px; color:#374151; font-variant-numeric:tabular-nums; min-width:42px; text-align:center;">100%</div>
+          <button style="width:32px; height:32px; border:none; background:transparent; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+        </div>
+      </div>
+      <!-- extracted panel -->
+      <div style="width:340px; flex-shrink:0; border-left:1px solid #E5E7EB; background:#FFFFFF; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; justify-content:space-between; height:48px; padding:0 10px 0 16px; border-bottom:1px solid #E5E7EB;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:13px; font-weight:600; color:#111827;">Extracted content</span>
+            <button title="Collapse panel" style="width:24px; height:24px; border:none; background:transparent; border-radius:5px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5l7 7-7 7"></path><path d="M5 5l7 7-7 7"></path></svg></button>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy</button>
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>Export</button>
+          </div>
+        </div>
+        <div style="flex:1; overflow:hidden; padding:16px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.75; color:#374151; white-space:pre-wrap;">QUARTERLY BUSINESS REVIEW
+Q2 2026 — Operations Summary
+
+1. Overview
+Revenue grew 14% quarter-over-
+quarter, driven by expansion in the
+enterprise segment and improved
+retention across mid-market accounts.
+
+2. Key Metrics
+- Net revenue retention: 118%
+- Gross margin: 71.4%
+- Active workspaces: 12,480
+- Avg. seats per account: 38
+
+3. Outlook
+Headcount investment in Q3 is
+expected to compress margin by
+roughly 2 points before recovering.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 4 · DOCX VIEWER ============ -->
+<div style="position:absolute; left:1400px; top:820px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">04</span>&nbsp;&nbsp;Word (.docx) viewer</div>
+  <div data-screen-label="DOCX viewer" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="display:flex; flex-direction:column; line-height:1.15;">
+          <div style="font-weight:600; font-size:14px; color:#111827;">Project-brief.docx</div>
+          <div style="font-size:11px; color:#9CA3AF;">Word document · 86 KB</div>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F9FAFB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#FFFFFF; color:#374151; font-weight:500; font-size:13px; font-family:inherit; border:1px solid #E5E7EB; box-shadow:0 1px 2px rgba(16,24,40,0.04); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <div style="display:flex; height:640px;">
+      <div style="flex:1; min-width:0; background:#F3F4F6; overflow:hidden; padding:32px 0; display:flex; justify-content:center;">
+        <div style="width:520px; height:100%; overflow:hidden; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:3px; box-shadow:0 4px 18px rgba(16,24,40,0.1); padding:48px 56px; font-family:Georgia, 'Times New Roman', serif; color:#1F2937;">
+          <div style="font-size:24px; font-weight:700; color:#111827; font-family:'Inter',sans-serif; margin-bottom:4px;">Project Brief</div>
+          <div style="font-size:12px; color:#9CA3AF; font-family:'Inter',sans-serif; margin-bottom:24px;">Last updated June 24, 2026 · Owner: Product</div>
+          <div style="font-size:15px; font-weight:600; color:#111827; font-family:'Inter',sans-serif; margin-bottom:8px;">1. Background</div>
+          <p style="font-size:13.5px; line-height:1.75; margin:0 0 16px;">DocsViewer lets people open and read documents directly in the browser with no upload to a server. Files are parsed on the client, and extracted text is made available for copy and export.</p>
+          <div style="font-size:15px; font-weight:600; color:#111827; font-family:'Inter',sans-serif; margin-bottom:8px;">2. Supported formats</div>
+          <p style="font-size:13.5px; line-height:1.75; margin:0 0 16px;">The first release covers three common formats, summarised below.</p>
+          <table style="width:100%; border-collapse:collapse; font-family:'Inter',sans-serif; font-size:12.5px; margin-bottom:8px;">
+            <thead>
+              <tr style="background:#F9FAFB;">
+                <th style="text-align:left; padding:8px 10px; border:1px solid #E5E7EB; font-weight:600; color:#374151;">Format</th>
+                <th style="text-align:left; padding:8px 10px; border:1px solid #E5E7EB; font-weight:600; color:#374151;">Extension</th>
+                <th style="text-align:left; padding:8px 10px; border:1px solid #E5E7EB; font-weight:600; color:#374151;">Extraction</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:8px 10px; border:1px solid #E5E7EB;">Portable Document</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">.pdf</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">Text layer</td></tr>
+              <tr><td style="padding:8px 10px; border:1px solid #E5E7EB;">Word</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">.docx</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">Full body</td></tr>
+              <tr><td style="padding:8px 10px; border:1px solid #E5E7EB;">Excel</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">.xlsx</td><td style="padding:8px 10px; border:1px solid #E5E7EB;">Per sheet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="width:340px; flex-shrink:0; border-left:1px solid #E5E7EB; background:#FFFFFF; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; justify-content:space-between; height:48px; padding:0 10px 0 16px; border-bottom:1px solid #E5E7EB;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:13px; font-weight:600; color:#111827;">Extracted content</span>
+            <button title="Collapse panel" style="width:24px; height:24px; border:none; background:transparent; border-radius:5px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5l7 7-7 7"></path><path d="M5 5l7 7-7 7"></path></svg></button>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy</button>
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>Export</button>
+          </div>
+        </div>
+        <div style="flex:1; overflow:hidden; padding:16px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.75; color:#374151; white-space:pre-wrap;">Project Brief
+Last updated June 24, 2026
+
+1. Background
+DocsViewer lets people open and read
+documents directly in the browser with
+no upload to a server. Files are parsed
+on the client, and extracted text is
+made available for copy and export.
+
+2. Supported formats
+The first release covers three common
+formats, summarised below.
+
+Format | Extension | Extraction
+Portable Document | .pdf | Text layer
+Word | .docx | Full body
+Excel | .xlsx | Per sheet</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 5 · XLSX VIEWER ============ -->
+<div style="position:absolute; left:0px; top:1640px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">05</span>&nbsp;&nbsp;Excel (.xlsx) viewer</div>
+  <div data-screen-label="XLSX viewer" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="display:flex; flex-direction:column; line-height:1.15;">
+          <div style="font-weight:600; font-size:14px; color:#111827;">sales-q2.xlsx</div>
+          <div style="font-size:11px; color:#9CA3AF;">3 sheets · 212 KB</div>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F9FAFB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#FFFFFF; color:#374151; font-weight:500; font-size:13px; font-family:inherit; border:1px solid #E5E7EB; box-shadow:0 1px 2px rgba(16,24,40,0.04); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <div style="display:flex; height:640px;">
+      <div style="flex:1; min-width:0; background:#FFFFFF; display:flex; flex-direction:column; overflow:hidden;">
+        <div style="flex:1; overflow:hidden;">
+          <table style="border-collapse:collapse; width:100%; font-size:12.5px; table-layout:fixed; font-variant-numeric:tabular-nums;">
+            <colgroup><col style="width:42px;"><col style="width:140px;"><col style="width:130px;"><col><col><col><col></colgroup>
+            <thead>
+              <tr style="background:#F9FAFB; color:#9CA3AF;">
+                <th style="height:28px; border:1px solid #E5E7EB; font-weight:500;"></th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">A</th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">B</th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">C</th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">D</th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">E</th>
+                <th style="border:1px solid #E5E7EB; font-weight:500;">F</th>
+              </tr>
+            </thead>
+            <tbody style="color:#374151;">
+              <tr>
+                <td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">1</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827;">Region</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827;">Product</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827; text-align:right;">Units</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827; text-align:right;">Revenue</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827; text-align:right;">Margin</td>
+                <td style="padding:0 10px; border:1px solid #E5E7EB; font-weight:600; color:#111827;">Status</td>
+              </tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">2</td><td style="padding:0 10px; border:1px solid #E5E7EB;">North</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Pro plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">1,204</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$248,400</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">72%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">3</td><td style="padding:0 10px; border:1px solid #E5E7EB;">North</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Team plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">880</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$132,000</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">68%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr style="background:#EEF2FF;"><td style="height:30px; text-align:center; background:#E0E7FF; color:#4F46E5; border:1px solid #C7D2FE;">4</td><td style="padding:0 10px; border:1px solid #C7D2FE; box-shadow:inset 0 0 0 1.5px #4F46E5;">EMEA</td><td style="padding:0 10px; border:1px solid #C7D2FE;">Pro plan</td><td style="padding:0 10px; border:1px solid #C7D2FE; text-align:right;">2,310</td><td style="padding:0 10px; border:1px solid #C7D2FE; text-align:right;">$476,300</td><td style="padding:0 10px; border:1px solid #C7D2FE; text-align:right;">74%</td><td style="padding:0 10px; border:1px solid #C7D2FE;">In review</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">5</td><td style="padding:0 10px; border:1px solid #E5E7EB;">EMEA</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Team plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">1,540</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$231,000</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">69%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">6</td><td style="padding:0 10px; border:1px solid #E5E7EB;">APAC</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Pro plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">1,025</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$205,000</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">71%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">7</td><td style="padding:0 10px; border:1px solid #E5E7EB;">APAC</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Enterprise</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">320</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$384,000</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">66%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Pending</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">8</td><td style="padding:0 10px; border:1px solid #E5E7EB;">LATAM</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Team plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">610</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$91,500</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">64%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">9</td><td style="padding:0 10px; border:1px solid #E5E7EB;">LATAM</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Pro plan</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">744</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">$148,800</td><td style="padding:0 10px; border:1px solid #E5E7EB; text-align:right;">70%</td><td style="padding:0 10px; border:1px solid #E5E7EB;">Closed</td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">10</td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td></tr>
+              <tr><td style="height:30px; text-align:center; background:#F9FAFB; color:#9CA3AF; border:1px solid #E5E7EB;">11</td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td><td style="padding:0 10px; border:1px solid #E5E7EB;"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- sheet tabs -->
+        <div style="display:flex; align-items:center; gap:2px; height:40px; padding:0 10px; border-top:1px solid #E5E7EB; background:#F9FAFB;">
+          <div style="height:30px; display:flex; align-items:center; padding:0 14px; font-size:12.5px; font-weight:600; color:#4F46E5; background:#FFFFFF; border:1px solid #E5E7EB; border-bottom:2px solid #4F46E5; border-radius:6px 6px 0 0; margin-bottom:-1px;">Q2 Summary</div>
+          <div style="height:30px; display:flex; align-items:center; padding:0 14px; font-size:12.5px; color:#6B7280; cursor:pointer;">Raw Data</div>
+          <div style="height:30px; display:flex; align-items:center; padding:0 14px; font-size:12.5px; color:#6B7280; cursor:pointer;">Pivot</div>
+          <button style="width:26px; height:26px; margin-left:4px; border:none; background:transparent; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#9CA3AF; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+        </div>
+      </div>
+      <div style="width:340px; flex-shrink:0; border-left:1px solid #E5E7EB; background:#FFFFFF; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; justify-content:space-between; height:48px; padding:0 10px 0 16px; border-bottom:1px solid #E5E7EB;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:13px; font-weight:600; color:#111827;">Extracted content</span>
+            <button title="Collapse panel" style="width:24px; height:24px; border:none; background:transparent; border-radius:5px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5l7 7-7 7"></path><path d="M5 5l7 7-7 7"></path></svg></button>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy</button>
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>Export CSV</button>
+          </div>
+        </div>
+        <div style="flex:1; overflow:hidden; padding:16px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.85; color:#374151; white-space:pre;">Sheet: Q2 Summary
+
+Region,Product,Units,Revenue,Margin,Status
+North,Pro plan,1204,248400,72%,Closed
+North,Team plan,880,132000,68%,Closed
+EMEA,Pro plan,2310,476300,74%,In review
+EMEA,Team plan,1540,231000,69%,Closed
+APAC,Pro plan,1025,205000,71%,Closed
+APAC,Enterprise,320,384000,66%,Pending
+LATAM,Team plan,610,91500,64%,Closed
+LATAM,Pro plan,744,148800,70%,Closed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 6 · SEARCH ACTIVE ============ -->
+<div style="position:absolute; left:1400px; top:1640px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">06</span>&nbsp;&nbsp;Search active</div>
+  <div data-screen-label="Search active" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="display:flex; flex-direction:column; line-height:1.15;">
+          <div style="font-weight:600; font-size:14px; color:#111827;">Q2-business-review.pdf</div>
+          <div style="font-size:11px; color:#9CA3AF;">24 pages · 4.2 MB</div>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <!-- active search field -->
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 6px 0 12px; border:1.5px solid #4F46E5; border-radius:8px; background:#FFFFFF; box-shadow:0 0 0 3px rgba(79,70,229,0.15);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="flex:1; font-size:13px; color:#111827;">revenue</span>
+          <span style="font-size:12px; color:#9CA3AF; font-variant-numeric:tabular-nums; padding-right:2px;">2 / 15</span>
+          <div style="width:1px; height:18px; background:#E5E7EB;"></div>
+          <button style="width:26px; height:26px; border:none; background:transparent; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"></path></svg></button>
+          <button style="width:26px; height:26px; border:none; background:transparent; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+          <button style="width:26px; height:26px; border:none; background:transparent; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#FFFFFF; color:#374151; font-weight:500; font-size:13px; font-family:inherit; border:1px solid #E5E7EB; box-shadow:0 1px 2px rgba(16,24,40,0.04); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <div style="display:flex; height:640px;">
+      <div style="flex:1; min-width:0; background:#F3F4F6; position:relative; display:flex; align-items:flex-start; justify-content:center; overflow:hidden; padding:32px 0;">
+        <div style="position:relative; width:460px; height:600px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:3px; box-shadow:0 4px 18px rgba(16,24,40,0.1); background-image:repeating-linear-gradient(45deg, #FAFAFB, #FAFAFB 11px, #F4F5F7 11px, #F4F5F7 22px);">
+          <!-- highlight marks on page -->
+          <div style="position:absolute; top:150px; left:70px; width:78px; height:15px; background:#C7D2FE; border-radius:2px;"></div>
+          <div style="position:absolute; top:248px; left:190px; width:78px; height:15px; background:#4F46E5; border-radius:2px; box-shadow:0 0 0 2px rgba(79,70,229,0.25);"></div>
+          <div style="position:absolute; top:360px; left:120px; width:78px; height:15px; background:#C7D2FE; border-radius:2px;"></div>
+          <div style="position:absolute; bottom:16px; left:50%; transform:translateX(-50%); font-family:ui-monospace,Menlo,monospace; font-size:11px; color:#9CA3AF; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:6px; padding:6px 10px;">3 matches on this page</div>
+        </div>
+      </div>
+      <div style="width:340px; flex-shrink:0; border-left:1px solid #E5E7EB; background:#FFFFFF; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; justify-content:space-between; height:48px; padding:0 10px 0 16px; border-bottom:1px solid #E5E7EB;">
+          <span style="font-size:13px; font-weight:600; color:#111827;">Extracted content</span>
+          <div style="display:flex; gap:6px;">
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>Copy</button>
+            <button style="display:flex; align-items:center; gap:5px; height:28px; padding:0 10px; border:1px solid #E5E7EB; border-radius:6px; background:#FFFFFF; color:#374151; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>Export</button>
+          </div>
+        </div>
+        <div style="flex:1; overflow:hidden; padding:16px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; line-height:1.85; color:#374151; white-space:pre-wrap;">QUARTERLY BUSINESS REVIEW
+Q2 2026 — Operations Summary
+
+1. Overview
+<span style="background:#C7D2FE; color:#312E81; border-radius:3px; padding:1px 2px;">Revenue</span> grew 14% quarter-over-
+quarter, driven by expansion in the
+enterprise segment.
+
+2. Key Metrics
+- Net <span style="background:#4F46E5; color:#FFFFFF; border-radius:3px; padding:1px 2px;">revenue</span> retention: 118%
+- Gross margin: 71.4%
+
+3. Outlook
+Q3 <span style="background:#C7D2FE; color:#312E81; border-radius:3px; padding:1px 2px;">revenue</span> is expected to
+accelerate as new seats activate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 7 · ERROR IN CONTEXT ============ -->
+<div style="position:absolute; left:0px; top:2460px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">07</span>&nbsp;&nbsp;Error · banner in context</div>
+  <div data-screen-label="Error in context" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:16px; height:56px; padding:0 16px; border-bottom:1px solid #E5E7EB; background:#FFFFFF;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <div style="width:28px; height:28px; border-radius:7px; background:#4F46E5; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;">D</div>
+        <div style="font-weight:600; font-size:15px; color:#111827; letter-spacing:-0.01em;">DocsViewer</div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px; width:100%; max-width:440px; height:36px; padding:0 12px; border:1px solid #E5E7EB; border-radius:8px; background:#F9FAFB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+          <span style="font-size:13px; color:#9CA3AF;">Search in document</span>
+        </div>
+      </div>
+      <button style="display:flex; align-items:center; gap:7px; height:36px; padding:0 14px; border-radius:8px; background:#4F46E5; color:#FFFFFF; font-weight:500; font-size:13px; font-family:inherit; border:none; box-shadow:0 1px 2px rgba(16,24,40,0.1); cursor:pointer;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5"></path><path d="M8 9l4-4 4 4"></path><path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"></path></svg>
+        Open file
+      </button>
+    </div>
+    <!-- error banner -->
+    <div style="display:flex; align-items:center; gap:10px; min-height:46px; padding:8px 16px; background:#FEF2F2; border-bottom:1px solid #FECACA; color:#B91C1C;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16h.01"></path></svg>
+      <span style="font-size:13px;"><strong style="font-weight:600;">File too large.</strong> “Q2-financials.pdf” is 38 MB — the limit is 25 MB.</span>
+      <button style="margin-left:auto; width:26px; height:26px; border:none; background:transparent; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+    </div>
+    <div style="height:594px; background:#F9FAFB; display:flex; align-items:center; justify-content:center; padding:40px;">
+      <div style="width:100%; max-width:460px; text-align:center; display:flex; flex-direction:column; align-items:center;">
+        <div style="width:64px; height:64px; border-radius:16px; background:#FEF2F2; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M9.5 14.5l5 0"></path></svg>
+        </div>
+        <div style="font-size:18px; font-weight:600; color:#111827; margin-bottom:8px;">This file is too large</div>
+        <div style="font-size:13.5px; color:#6B7280; line-height:1.6; max-width:380px;">DocsViewer opens files up to 25&nbsp;MB. Try compressing the PDF or splitting it into smaller parts, then open it again.</div>
+        <div style="display:flex; gap:10px; margin-top:24px;">
+          <button style="height:38px; padding:0 18px; border-radius:8px; background:#4F46E5; color:#fff; font-size:13px; font-weight:500; font-family:inherit; border:none; cursor:pointer;">Try another file</button>
+          <button style="height:38px; padding:0 18px; border-radius:8px; background:#FFFFFF; color:#374151; font-size:13px; font-weight:500; font-family:inherit; border:1px solid #E5E7EB; cursor:pointer;">Learn more</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME 8 · ERROR VARIANTS ============ -->
+<div style="position:absolute; left:1400px; top:2460px; width:1280px; font-family:'Inter',system-ui,sans-serif; color:#111827;">
+  <div data-drags-parent="1" style="font-size:12px; font-weight:600; color:#6B7280; margin-bottom:10px; padding-left:2px; cursor:grab;"><span style="color:#4F46E5;">08</span>&nbsp;&nbsp;Error · message variants</div>
+  <div data-screen-label="Error variants" style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 8px 24px rgba(16,24,40,0.06); overflow:hidden; padding:28px; display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+    <!-- unsupported -->
+    <div style="border:1px solid #E5E7EB; border-radius:10px; padding:22px; display:flex; gap:14px; align-items:flex-start;">
+      <div style="width:42px; height:42px; flex-shrink:0; border-radius:10px; background:#FEF2F2; display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M4.9 4.9l14.2 14.2"></path></svg>
+      </div>
+      <div>
+        <div style="font-size:14.5px; font-weight:600; color:#111827; margin-bottom:5px;">Unsupported format</div>
+        <div style="font-size:13px; color:#6B7280; line-height:1.6;">We can’t open <span style="font-family:ui-monospace,Menlo,monospace; font-size:12px; color:#374151;">.pages</span> files yet. DocsViewer supports PDF, Word (.docx) and Excel (.xlsx).</div>
+        <button style="margin-top:14px; height:32px; padding:0 14px; border-radius:7px; background:#FFFFFF; color:#374151; font-size:12.5px; font-weight:500; font-family:inherit; border:1px solid #E5E7EB; cursor:pointer;">Choose another file</button>
+      </div>
+    </div>
+    <!-- too large -->
+    <div style="border:1px solid #E5E7EB; border-radius:10px; padding:22px; display:flex; gap:14px; align-items:flex-start;">
+      <div style="width:42px; height:42px; flex-shrink:0; border-radius:10px; background:#FEF2F2; display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+      </div>
+      <div>
+        <div style="font-size:14.5px; font-weight:600; color:#111827; margin-bottom:5px;">File too large</div>
+        <div style="font-size:13px; color:#6B7280; line-height:1.6;">This file is 38&nbsp;MB and the limit is 25&nbsp;MB. Try compressing it or splitting it into smaller parts.</div>
+        <button style="margin-top:14px; height:32px; padding:0 14px; border-radius:7px; background:#FFFFFF; color:#374151; font-size:12.5px; font-weight:500; font-family:inherit; border:1px solid #E5E7EB; cursor:pointer;">Try another file</button>
+      </div>
+    </div>
+    <!-- corrupt -->
+    <div style="border:1px solid #E5E7EB; border-radius:10px; padding:22px; display:flex; gap:14px; align-items:flex-start;">
+      <div style="width:42px; height:42px; flex-shrink:0; border-radius:10px; background:#FEF2F2; display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M15 9l-6 6M9 9l6 6"></path></svg>
+      </div>
+      <div>
+        <div style="font-size:14.5px; font-weight:600; color:#111827; margin-bottom:5px;">Can’t open this file</div>
+        <div style="font-size:13px; color:#6B7280; line-height:1.6;">This file appears to be damaged or incomplete. Try re-downloading it, or re-export it from the original app.</div>
+        <button style="margin-top:14px; height:32px; padding:0 14px; border-radius:7px; background:#FFFFFF; color:#374151; font-size:12.5px; font-weight:500; font-family:inherit; border:1px solid #E5E7EB; cursor:pointer;">Try another file</button>
+      </div>
+    </div>
+    <!-- no extractable text (warning, amber) -->
+    <div style="border:1px solid #FDE68A; border-radius:10px; padding:22px; display:flex; gap:14px; align-items:flex-start; background:#FFFBEB;">
+      <div style="width:42px; height:42px; flex-shrink:0; border-radius:10px; background:#FEF3C7; display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.6L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+      </div>
+      <div>
+        <div style="font-size:14.5px; font-weight:600; color:#92400E; margin-bottom:5px;">No extractable text</div>
+        <div style="font-size:13px; color:#A16207; line-height:1.6;">This PDF looks like a scanned image, so there’s no text to copy or search. You can still view every page.</div>
+        <button style="margin-top:14px; height:32px; padding:0 14px; border-radius:7px; background:#FFFFFF; color:#92400E; font-size:12.5px; font-weight:500; font-family:inherit; border:1px solid #FDE68A; cursor:pointer;">View pages anyway</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

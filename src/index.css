@@ -1,17 +1,28 @@
 /* AI Coding */
 /**
  * index.css — Tailwind CSS v4 (CSS-first) entrypoint.
- * Preflight áp cho app chrome. Content area (.docs-content) là ranh giới cô lập để
- * render lib (PDF.js/docx-preview/SheetJS) không bị CSS reset phá fidelity (ADR-001 caveat, NFR-02).
- * Cơ chế isolation chi tiết (shadow DOM/scope) sẽ hoàn thiện ở feature phase M1.
+ * Design tokens ánh xạ từ mockup (Design-MOC §3): brand indigo + Inter. Phần lớn palette
+ * (gray/red/amber/indigo) trùng default theme Tailwind v4 nên chỉ khai báo token bổ sung tối thiểu.
+ * Content area (.docs-content) cô lập khỏi preflight để render lib (PDF.js) giữ fidelity (NFR-02, SDD §3.1).
  */
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-primary: #4f46e5;
+}
 
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #111827;
 }
 
 .docs-content {

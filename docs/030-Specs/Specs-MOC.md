@@ -3,7 +3,7 @@ id: SPECS-MOC
 type: moc
 status: approved
 created: 2026-06-24
-updated: 2026-06-25
+updated: 2026-06-27
 ---
 
 # 🗺️ Specs MOC — Map of Content (030-Specs)
@@ -44,6 +44,7 @@ updated: 2026-06-25
 | [ADR-002-Client-Side-Processing](./Architecture/ADR-002-Client-Side-Processing.md) | Client-side only, không backend/DB ở MVP | accepted |
 | [ADR-003-Layered-Adapter-Registry](./Architecture/ADR-003-Layered-Adapter-Registry.md) | Kiến trúc layered + Adapter/Registry pattern (KR3.1/KR3.2) | accepted |
 | [ADR-004-Data-Layer-Separation](./Architecture/ADR-004-Data-Layer-Separation.md) | Tách lớp dữ liệu người dùng + extension point M3 (NFR-05/KR3.3) | accepted |
+| [ADR-005-Adopt-Design-Mockup](./Architecture/ADR-005-Adopt-Design-Mockup.md) | **Amends ADR-001 §2.2** — adopt design mockup (`docs/040-Design/mockups/`) làm visual baseline; lift một phần defer visual-design cho lát cắt PDF Sprint-1 | accepted |
 
 ---
 
