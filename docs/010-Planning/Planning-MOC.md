@@ -16,6 +16,10 @@ updated: 2026-06-24
 - [OKRs](./OKRs.md)
 - [Risk Register](./Risk-Register.md)
 
+## Phase 4 — Sprint Planning (DocsViewer)
+
+- [Sprint 001](./Sprints/Sprint-001.md) — 🟢 **active** · "Mở → Xem → Trích xuất PDF end-to-end" (M1 · 18 SP hiệu dụng)
+
 ## Khác
 
 - [Projects Registry](./Projects.md)

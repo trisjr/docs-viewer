@@ -45,7 +45,13 @@ Index Epics & User Stories của **DocsViewer (MVP / M1)**. Mỗi Story chuẩn 
 ## 🎯 Ưu tiên & Sprint
 
 - [Backlog Priority (MoSCoW + RICE)](./Backlog-Priority.md)
-- `Active-Sprint/` — _(chưa khởi tạo — tạo khi bắt đầu Sprint đầu tiên ở Phase-3)_
+- [Sprint 001 Plan](../010-Planning/Sprints/Sprint-001.md) — _active · "Mở → Xem → Trích xuất PDF end-to-end" · 18 SP hiệu dụng_
+- [`Active-Sprint/`](./Active-Sprint/) — **Sprint 001** đang chạy (khởi tạo ở Phase-4), 5 story active:
+  - [ST-01 — Upload Document](./Active-Sprint/Story-Upload-Document.md) · 3 SP
+  - [ST-02 — Layered Processing (Verify & Close)](./Active-Sprint/Story-Layered-Document-Processing.md) · 2 SP
+  - [ST-03 — View PDF](./Active-Sprint/Story-View-PDF.md) · 5 SP
+  - [ST-06 — Unified Viewer UI](./Active-Sprint/Story-Unified-Viewer-UI.md) · 3 SP
+  - [ST-07 — Extract PDF Text](./Active-Sprint/Story-Extract-PDF-Text.md) · 5 SP
 
 > [!NOTE]
 > Story OTP demo (Story-Request-OTP, Story-Verify-OTP) đã archive sang [`090-Archive/`](../090-Archive/Archive-MOC.md) ở Phase-1.
