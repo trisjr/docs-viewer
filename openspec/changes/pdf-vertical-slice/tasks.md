@@ -27,24 +27,24 @@
 
 ## 4. ST-07 — Extract PDF Text (đóng vòng slice)
 
-- [ ] 4.1 Hiện thực `extract(file)` trong `src/core/adapters/PdfAdapter.ts`: dùng PDF.js `page.getTextContent()` → `ExtractedContent` (`textBlocks` theo thứ tự trang & đọc cơ bản).
-- [ ] 4.2 Chạy extract off-main-thread qua `src/core/worker.ts` (WorkerRequest `extract`), giữ Core thuần (KR3.1). *(Apply note F2: extract off-main-thread = worker riêng PDF.js qua `getTextContent`; orchestration main-thread share 1 `getDocument` với render, không qua `src/core/worker.ts`.)*
-- [ ] 4.3 Wire `DocumentService.open()` gọi `adapter.extract` + `getExtracted(sessionId)`; dispatch `EXTRACTION_READY`.
-- [ ] 4.4 Hiện thực `src/ui/ExtractedContentPanel.tsx`: hiển thị nội dung trích xuất + trạng thái `Ready`/`Empty`/`Failed` — bám mockup frame 03 (panel monospace). *Nút Copy/Export hiển thị theo mockup nhưng **hành vi defer** (FR-08/ST-10 out-of-scope §8).*
-- [ ] 4.5 Unhappy: PDF scan/no-text-layer → `status: Empty` + warning amber "không có text trích xuất được", **vẫn view được** (frame 08 amber card); nội dung hỏng → `Failed`, không tạo kết quả.
+- [x] 4.1 Hiện thực `extract(file)` trong `src/core/adapters/PdfAdapter.ts`: dùng PDF.js `page.getTextContent()` → `ExtractedContent` (`textBlocks` theo thứ tự trang & đọc cơ bản).
+- [x] 4.2 Chạy extract off-main-thread qua `src/core/worker.ts` (WorkerRequest `extract`), giữ Core thuần (KR3.1). *(Apply note F2: extract off-main-thread = worker riêng PDF.js qua `getTextContent`; orchestration main-thread share 1 `getDocument` với render, không qua `src/core/worker.ts`.)*
+- [x] 4.3 Wire `DocumentService.open()` gọi `adapter.extract` + `getExtracted(sessionId)`; dispatch `EXTRACTION_READY`.
+- [x] 4.4 Hiện thực `src/ui/ExtractedContentPanel.tsx`: hiển thị nội dung trích xuất + trạng thái `Ready`/`Empty`/`Failed` — bám mockup frame 03 (panel monospace). *Nút Copy/Export hiển thị theo mockup nhưng **hành vi defer** (FR-08/ST-10 out-of-scope §8).*
+- [x] 4.5 Unhappy: PDF scan/no-text-layer → `status: Empty` + warning amber "không có text trích xuất được", **vẫn view được** (frame 08 amber card); nội dung hỏng → `Failed`, không tạo kết quả.
 
 ## 5. ST-02 — Layered Processing · Verify & Close (chạy CUỐI)
 
-- [ ] 5.1 Verify **KR3.1**: `test/architecture/dependency-rule.test.ts` xanh — `src/core/` (kể cả `PdfAdapter` mới) không import `ui`/`app`/`data`.
-- [ ] 5.2 Verify **KR3.2**: `test/core/AdapterRegistry.test.ts` xanh — `register`/`resolve` đúng, trả `undefined` cho format chưa đăng ký (backstop UC-02 E1).
-- [ ] 5.3 Verify **KR3.3**: `test/data/InMemoryStorageProvider.test.ts` + `test/composition.test.ts` xanh — `StorageProvider` port + DI tại composition root.
-- [ ] 5.4 Closing assertion: test khẳng định **đăng ký adapter thứ hai không cần sửa Core** (register một adapter giả → resolve được, Core không đổi).
-- [ ] 5.5 Xác nhận toàn bộ enabler tests nằm trong build gate `npm test`.
+- [x] 5.1 Verify **KR3.1**: `test/architecture/dependency-rule.test.ts` xanh — `src/core/` (kể cả `PdfAdapter` mới) không import `ui`/`app`/`data`.
+- [x] 5.2 Verify **KR3.2**: `test/core/AdapterRegistry.test.ts` xanh — `register`/`resolve` đúng, trả `undefined` cho format chưa đăng ký (backstop UC-02 E1).
+- [x] 5.3 Verify **KR3.3**: `test/data/InMemoryStorageProvider.test.ts` + `test/composition.test.ts` xanh — `StorageProvider` port + DI tại composition root.
+- [x] 5.4 Closing assertion: test khẳng định **đăng ký adapter thứ hai không cần sửa Core** (register một adapter giả → resolve được, Core không đổi). *(Apply: thêm test `AdapterRegistry.test.ts` — `FakeAdapter` cho format MỚI (`'rtf'`) plug qua `register()`, resolve được cạnh `PdfAdapter`, KHÔNG sửa Core.)*
+- [x] 5.5 Xác nhận toàn bộ enabler tests nằm trong build gate `npm test`.
 
 ## 6. Sprint DoD Gate (end-to-end PDF)
 
-- [ ] 6.1 `npm run build` (`tsc --noEmit && vite build`) **xanh**.
-- [ ] 6.2 `npm test` **xanh** (unit adapter + integration pipeline + extension-point).
-- [ ] 6.3 Đối chiếu 8 checklist hành vi end-to-end của Sprint-001 §4 (upload valid/invalid/oversize · view+paginate+zoom · ≤3s · extract · no-text · corrupt).
-- [ ] 6.4 Mọi file code tạo mới/sửa đáng kể có header `// AI Coding` (Clean Code Standard).
-- [ ] 6.5 Đối chiếu UI với mockup các frame trong scope (01 empty · 02 loading · 03 viewer+panel · 07/08 error) — nghiệm thu hướng (b).
+- [x] 6.1 `npm run build` (`tsc --noEmit && vite build`) **xanh**. *(Apply: build xanh; worker chunk `pdf.worker.min-*.mjs` emit thành asset riêng trong `dist/` → verify F2.)*
+- [x] 6.2 `npm test` **xanh** (unit adapter + integration pipeline + extension-point). *(Apply: 35 test / 11 file xanh — gồm closing assertion 5.4 mới.)*
+- [ ] 6.3 Đối chiếu 8 checklist hành vi end-to-end của Sprint-001 §4 (upload valid/invalid/oversize · view+paginate+zoom · ≤3s · extract · no-text · corrupt). *(Apply: **7/8 verified** — browser smoke (pdf.js v6 thật) xác nhận upload-valid · view+paginate(1→2/3)+zoom(100→150%) · extract panel Ready theo thứ tự đọc · unsupported `.pptx`→banner đỏ; unit test phủ oversize · no-text(Empty) · corrupt(CORRUPT). **Item ≤3s CHƯA verify** — chờ baseline fixture chuẩn từ QA, cùng blocker với 3.10.)*
+- [x] 6.4 Mọi file code tạo mới/sửa đáng kể có header `// AI Coding` (Clean Code Standard). *(Apply: grep toàn bộ `src/`+`test/` — không file nào thiếu header.)*
+- [x] 6.5 Đối chiếu UI với mockup các frame trong scope (01 empty · 02 loading · 03 viewer+panel · 07/08 error) — nghiệm thu hướng (b). *(Apply: browser smoke verify trực quan frame 01/02/03/07 khớp mockup (tokens indigo/gray/red); frame 08 cards (amber no-text / đỏ failed) verify qua `ExtractedContentPanel` + unit test — fixture no-text chưa dựng trong phiên này.)*
